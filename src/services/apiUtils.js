@@ -6,7 +6,7 @@ export const testApiConnectivity = async () => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000);
     
-    const response = await fetch('https://swapi.dev/api/people/1/', {
+    const response = await fetch('https://swapi.info/api/people/1', {
       signal: controller.signal,
       method: 'GET',
       headers: {

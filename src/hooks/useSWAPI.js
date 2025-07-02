@@ -36,17 +36,27 @@ export const usePerson = (id) => {
       try {
         setLoading(true);
         setError(null);
+        
+        // Debug logging
+        console.log('usePerson hook - fetching character with ID:', id, typeof id);
+        
         const result = await swapiService.getPerson(id);
         setData(result);
       } catch (err) {
+        console.error('usePerson hook - error:', err.message);
         setError(err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    if (id) {
+    // Validate ID before making API call
+    if (id && id !== 'undefined' && id !== 'null' && String(id).trim() !== '') {
       fetchPerson();
+    } else {
+      console.warn('usePerson hook - invalid ID provided:', id);
+      setLoading(false);
+      setError('Invalid character ID provided');
     }
   }, [id]);
 

@@ -7,6 +7,23 @@ import ErrorMessage from '../components/ErrorMessage';
 
 const CharacterDetail = () => {
   const { id } = useParams();
+  
+  // Debug logging
+  console.log('CharacterDetail component - ID from useParams:', id, typeof id);
+  
+  // Validate ID parameter
+  if (!id || id === 'undefined' || id === 'null') {
+    return (
+      <div className="character-detail">
+        <div className="character-detail-header">
+          <Link to="/" className="back-link">← Back to Characters</Link>
+          <h1>Invalid Character ID</h1>
+        </div>
+        <ErrorMessage message="No character ID provided. Please select a character from the list." />
+      </div>
+    );
+  }
+  
   const { data: character, loading, error } = usePerson(id);
   const [additionalData, setAdditionalData] = useState({
     homeworld: null,

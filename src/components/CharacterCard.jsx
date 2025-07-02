@@ -3,8 +3,18 @@ import { Link } from 'react-router-dom';
 const CharacterCard = ({ character, index }) => {
   // Extract ID from the character URL
   const getId = (url) => {
-    const matches = url.match(/\/(\d+)\/$/);
-    return matches ? matches[1] : null;
+    // Handle both formats: /people/1/ and /people/1
+    const matches = url.match(/\/people\/(\d+)\/?$/);
+    const id = matches ? matches[1] : null;
+    
+    // Debug logging
+    if (!id) {
+      console.warn('Could not extract ID from URL:', url);
+    } else {
+      console.log('Extracted ID:', id, 'from URL:', url);
+    }
+    
+    return id;
   };
 
   const characterId = getId(character.url);
@@ -51,11 +61,16 @@ const CharacterCard = ({ character, index }) => {
       </div>
 
       <Link 
-        to={`/character/${characterId}`}
-        className="btn btn-primary"
-        style={{ textDecoration: 'none' }}
+        to={characterId ? `/character/${characterId}` : '#'}
+        className={`btn btn-primary ${!characterId ? 'disabled' : ''}`}
+        style={{ 
+          textDecoration: 'none',
+          opacity: characterId ? 1 : 0.5,
+          pointerEvents: characterId ? 'auto' : 'none'
+        }}
+        onClick={!characterId ? (e) => e.preventDefault() : undefined}
       >
-        View Details
+        {characterId ? 'View Details' : 'Invalid Character'}
       </Link>
     </div>
   );

@@ -4,7 +4,7 @@
 
 This is a React.js application that fetches data from the Star Wars API (SWAPI) and displays it in a list format. The app includes:
 
-- Data fetching from https://swapi.dev/api/people/
+- Data fetching from https://swapi.info/api/people/
 - Character list with search functionality
 - Detail view with routing using React Router
 - Error handling and loading states
